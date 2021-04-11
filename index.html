@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Calculator</title>
     <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet"> 
 </head>
 <body>
-
+    <div id="div-title">
+        <h1>Simple Calculator</h1>
+    </div>
     <div id="div-calc">
         <div id="div-screen-delete">
             <div id="div-screen">
@@ -18,9 +22,9 @@
             <button class="btn-delete" id="delete">Del</button>
         </div>
         <div id="div-buttons">
-            <button class="btn-clear btn-circle" id="ac">AC</button>
-            <button class="btn-op btn-circle" data-op="modulo">%</button>
-            <button class="btn-op btn-circle" data-op="power">^</button>
+            <button class="btn-clear btn-circle btn-sec-color" id="ac">AC</button>
+            <button class="btn-op btn-circle btn-sec-color" data-op="modulo">%</button>
+            <button class="btn-op btn-circle btn-sec-color" data-op="power">^</button>
             <button class="btn-op btn-circle" data-op="multiply">x</button>
             <button class="btn-num btn-circle btn-white" data-num="7">7</button>
             <button class="btn-num btn-circle btn-white" data-num="8">8</button>
@@ -37,7 +41,7 @@
             <button class="btn-dot btn-circle btn-white" data-applied="false" id="dot">.</button>
             <button class="btn-num btn-circle btn-white" data-num="0">0</button>
             <button class="btn-circle btn-white" data-op="flipSign" id="flipSign">+/-</button>
-            <button class="btn-circle" data-op="operate" id="equal">=</button> <!--operate????-->
+            <button class="btn-circle btn-special" data-op="operate" id="equal">=</button> 
         </div>
     </div>
 
