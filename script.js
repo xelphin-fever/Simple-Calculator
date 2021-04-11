@@ -11,14 +11,18 @@ function multiply(a,b){
     return a*b;
 }
 function divide(a,b){
-    //NOTE: divide by zero is illigal
-    return (a/b).toFixed(2);
+    if (b!=0){
+        return (a/b).toFixed(2);
+    }
+    
 }
 function power(a,b){
     return a**b;
 }
 function modulo(a,b){
-    return a%b;
+    if (b!=0){
+        return a%b;
+    }
 }
 
 //OPERATE FUNCTION
@@ -49,6 +53,7 @@ const btnClear = document.querySelector("#ac");
 const btnDot = document.querySelector("#dot");
 const btnFlipSign = document.querySelector("#flipSign");
 const btnEqual = document.querySelector("#equal");
+const message = document.querySelector("#div-message");
 //
 let operatorName ="";
 let operatorSign="";
@@ -56,11 +61,21 @@ let answer="";
 let a = "";
 let b = "";
 let aDone = false;
-let bDone =true; //CHANGED
+let bDone =true;
 let showAnswer =false;
+let showMessage = false;
 
 
 //ATTACH EVENTS
+window.addEventListener("click", event => {
+    if (showMessage == true) {
+        message.style.backgroundColor="var(--primary)";
+    }
+    else{
+        message.style.backgroundColor="white";
+    }
+    showMessage=false;
+});
 numbers.forEach((number) => {
     number.addEventListener('click',numberClicked);
 });
@@ -84,6 +99,9 @@ function numberClicked(event){
     }
     else if (variable.includes(".") && ((variable.indexOf(".")+3)==variable.length)){
         console.log("limit of up to 2 decimal points")
+        showMessage=true;
+        message.textContent="Limit of up to 2 decimal points";
+
     }
     else if (variable.length<8){
         variable=variable+numClicked;
@@ -101,10 +119,14 @@ function operatorClicked(event){
         a=answer;
     }
     if (a=="" || a=="-"){
-        console.log("Need to put number before putting operator")
+        console.log("Need to put number before putting operator");
+        message.textContent="Need to put number before putting operating";
+        showMessage=true;
     }
     else if(operatorName!=""){
         console.log("You already put an operator"); 
+        message.textContent="You already put an operator";
+        showMessage=true;
     }
     else{
         aDone=true;
@@ -162,6 +184,8 @@ function dotClicked(event){
     }
     else if (variable.includes(".")){
         console.log("already put a point");
+        message.textContent="You already put a point";
+        showMessage=true;
     }
     else{
         variable=variable+".";
@@ -213,7 +237,7 @@ function flipSignClicked(event){
 
 function equalClicked(event){
     console.log(event.target.getAttribute("id"));
-    if (!(b=="") && b!="-"){
+    if (!(b=="") && b!="-" && (b!="0" || operatorName!="divide")&& (b!="0" || operatorName!="modulo")){
         screenPrev.textContent=screenCurrent.textContent;
         console.log("gonna operate: ",operatorName);
         answer=operate(operatorName,Number(a),Number(b));
@@ -232,6 +256,14 @@ function equalClicked(event){
     }
     else{
         console.log("please enter a valid equation");
+        if (!(b=="0" && operatorName=="divide" ) && !(b=="0" && operatorName=="modulo")){
+            message.textContent="Please enter a valid equation";
+            showMessage=true;
+        }
+        else{
+            message.textContent="Can't divide by zero";
+            showMessage=true;
+        }
     }
 }
 

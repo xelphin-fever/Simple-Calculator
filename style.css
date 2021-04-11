@@ -30,8 +30,8 @@ h1{
 #div-calc{
     background-color: white;
     box-shadow: 10px 10px 5px var(--secondary);
-    width:500px;
-    height:80vh;
+    width:450px;
+    height:70vh;
     border:3px solid var(--light);
     margin:50px auto;
     padding:20px;
@@ -122,4 +122,18 @@ h1{
 }
 .btn-special{
     background: linear-gradient(80deg,var(--primary),var(--special));
+}
+
+
+#div-message{
+    width:25vw;
+    height:80px;
+    color:white;
+    font-size:25px;
+    background-color: var(--primary);
+    text-align: center;
+    padding:20px;
+    outline-style: solid;
+    outline-color: white;
+    outline-offset:-10px;
 }
