@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div id="div-calc">
+        <div id="div-screen-delete">
+            <div id="div-screen">
+                <div id="div-screen-previous"></div>
+                <div id="div-screen-current" style="font-size:60px;"></div>
+            </div>
+            <button class="btn-delete" id="delete">Del</button>
+        </div>
+        <div id="div-buttons">
+            <button class="btn-clear btn-circle" id="ac">AC</button>
+            <button class="btn-op btn-circle" data-op="modulo">%</button>
+            <button class="btn-op btn-circle" data-op="power">^</button>
+            <button class="btn-op btn-circle" data-op="multiply">x</button>
+            <button class="btn-num btn-circle btn-white" data-num="7">7</button>
+            <button class="btn-num btn-circle btn-white" data-num="8">8</button>
+            <button class="btn-num btn-circle btn-white" data-num="9">9</button>
+            <button class="btn-op btn-circle" data-op="divide">/</button>
+            <button class="btn-num btn-circle btn-white" data-num="4">4</button>
+            <button class="btn-num btn-circle btn-white" data-num="5">5</button>
+            <button class="btn-num btn-circle btn-white" data-num="6">6</button>
+            <button class="btn-op btn-circle" data-op="add">+</button>
+            <button class="btn-num btn-circle btn-white" data-num="1">1</button>
+            <button class="btn-num btn-circle btn-white" data-num="2">2</button>
+            <button class="btn-num btn-circle btn-white" data-num="3">3</button>
+            <button class="btn-op btn-circle" data-op="subtract">-</button>
+            <button class="btn-dot btn-circle btn-white" data-applied="false" id="dot">.</button>
+            <button class="btn-num btn-circle btn-white" data-num="0">0</button>
+            <button class="btn-circle btn-white" data-op="flipSign" id="flipSign">+/-</button>
+            <button class="btn-circle" data-op="operate" id="equal">=</button> <!--operate????-->
+        </div>
+    </div>
+
+
+    <script src="./script.js"></script>
+</body>
+</html>
