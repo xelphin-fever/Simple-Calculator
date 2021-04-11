@@ -50,14 +50,15 @@ const btnDot = document.querySelector("#dot");
 const btnFlipSign = document.querySelector("#flipSign");
 const btnEqual = document.querySelector("#equal");
 //
-let operator ="";
-let sign="";
+let operatorName ="";
+let operatorSign="";
 let answer="";
 let a = "";
 let b = "";
 let aDone = false;
 let bDone =true; //CHANGED
 let showAnswer =false;
+
 
 //ATTACH EVENTS
 numbers.forEach((number) => {
@@ -76,29 +77,18 @@ btnEqual.addEventListener('click',equalClicked);
 //EVENT FUNCTIONS
 function numberClicked(event){
     showAnswer=false;
+    let variable=findCurrent();
     let numClicked=event.target.getAttribute("data-num"); //string
-    if (aDone==false){
-        if (a==""){
-            a=numClicked;
-        }
-        else if (a.includes(".") && ((a.indexOf(".")+3)==a.length)){
-            console.log("limit of up to 2 decimal points")
-        }
-        else if (a.length<8){
-            a=a+numClicked;
-        }
+    if (variable==""){
+        variable=numClicked;
     }
-    else if (bDone==false){
-        if (b===""){
-            b=numClicked;
-        }
-        else if (b.includes(".") && ((b.indexOf(".")+3)==b.length)){
-            console.log("limit of up to 2 decimal points")
-        }
-        else if (b.length<8){
-            b=b+numClicked;
-        }
+    else if (variable.includes(".") && ((variable.indexOf(".")+3)==variable.length)){
+        console.log("limit of up to 2 decimal points")
     }
+    else if (variable.length<8){
+        variable=variable+numClicked;
+    }
+    updateCurrent(variable);
     console.log("a:",a);
     console.log("b: ",b);
     showScreen();
@@ -113,34 +103,35 @@ function operatorClicked(event){
     if (a=="" || a=="-"){
         console.log("Need to put number before putting operator")
     }
-    else if(operator!=""){
+    else if(operatorName!=""){
         console.log("You already put an operator"); 
     }
     else{
         aDone=true;
         bDone=false;
-        operator=event.target.getAttribute("data-op");
-        sign=event.target.textContent;
+        operatorName=event.target.getAttribute("data-op");
+        operatorSign=event.target.textContent;
     }
     showScreen();
 }
 
 function deleteClicked(event){
     showAnswer=false; 
-    //If delete and a.length+b.length is smaller, then make size larger
-    if (aDone==false && !(a=="")){
-        let aLength=a.length;
-        let aNew = a.substr(0, aLength-1);
-        a=aNew;
-        console.log("deleted from a");
+    let variable=findCurrent();
+    //On 'a' or 'b'
+    if (variable!=""){
+        let varLength=variable.length;
+        let varNew = variable.substr(0, varLength-1);
+        variable=varNew;
+        updateCurrent(variable);
     }
-    else if(bDone==false && !(b=="")){
-        let bLength=b.length;
-        let bNew = b.substr(0, bLength-1);
-        b=bNew;
-        console.log("deleted from b");
+    //On operator
+    else if (variable=="" && operatorSign!=""){
+        operatorSign="";
+        operatorName=""
+        aDone=false;
+        bDone=true;
     }
-    //NOTE: delete operator option as well
     console.log("a:",a);
     console.log("b: ",b);
     showScreen();
@@ -150,8 +141,8 @@ function clearClicked(event){
     screenPrev.textContent="";
     showAnswer=false;
     console.log(event.target.getAttribute("id"));
-    operator ="";
-    sign="";
+    operatorName ="";
+    operatorSign="";
     answer="";
     a = "";
     b = "";
@@ -165,29 +156,17 @@ function clearClicked(event){
 function dotClicked(event){
     showAnswer=false;
     console.log(event.target.getAttribute("id"));
-    //NOTE: not make beyond 2 decimal points
-    if (aDone==false){
-        if (a==""){
-            a="0.";
-        }
-        else if (a.includes(".")){
-            console.log("already put a point");
-        }
-        else{
-            a=a+".";
-        }
+    let variable = findCurrent();
+    if (variable==""){
+        variable="0.";
     }
-    else if (bDone==false){
-        if (b==""){
-            b="0.";
-        }
-        else if (b.includes(".")){
-            console.log("already put a point");
-        }
-        else{
-            b=b+".";
-        }
+    else if (variable.includes(".")){
+        console.log("already put a point");
     }
+    else{
+        variable=variable+".";
+    }
+    updateCurrent(variable);
     console.log("a:",a);
     console.log("b: ",b);
     showScreen();
@@ -197,9 +176,8 @@ function dotClicked(event){
 function flipSignClicked(event){
     showAnswer=false;
     console.log(event.target.getAttribute("id"));
-    //NOTE: Answer is negative, don't do neg on neg
-    //NOTE: 8---5 happens
-    if (a=="" && !(answer=="")){
+    let variable = findCurrent();
+    if (a=="" && !(answer=="")){ //make answer flip sign: ans=3 -> -3___
         if (answer[0]=="-"){
             a=answer.substr(1,answer.length);
         }
@@ -207,32 +185,26 @@ function flipSignClicked(event){
             a="-"+answer;
         }
     }
-    else if (aDone==false){
-        if (a=="" && answer==""){
-            a="-";
+    else if (aDone==false || bDone==false){ //make variable flip sign
+        if (findCurrent()==a && a=="" && answer==""){ //no variable or answer put yet: ___ -> -___
+            a="-"
         }
         else{
-            if (a[0]=="-"){
-                a=a.substr(1,a.length);
+            if (variable==""){ //flip sign of empty variable: 3+__ -> 3+-__
+                variable="-";
             }
             else{
-                a="-"+a;
+                if (variable[0]=="-"){ //flip sign of negative 3+-2 -> 3+2
+                    variable=variable.substr(1,variable.length); 
+                }
+                else{ //flip sign of positive 3+2 -> 3+-2
+                    variable="-"+variable;
+                }
             }
+            updateCurrent(variable);
         }
     }
-    else if (bDone==false){
-        if (b==""){
-            b="-";
-        }
-        else{
-            if (b[0]=="-"){
-                b=b.substr(1,b.length);
-            }
-            else{
-                b="-"+b;
-            }
-        }
-    }
+    
     console.log("a:",a);
     console.log("b: ",b);
     showScreen();
@@ -241,22 +213,17 @@ function flipSignClicked(event){
 
 function equalClicked(event){
     console.log(event.target.getAttribute("id"));
-    //NOTE: in case only 'a' put 
-    //      in case nothing put
-    //      in case operator put and 'b' not put
-    //      in case one of them finished in '.' ex. 2+54.
-    //      operation has sign and operation because of sign and operation 3*-4 (maybe can ignore)
     if (!(b=="") && b!="-"){
         screenPrev.textContent=screenCurrent.textContent;
-        console.log("gonna operate: ",operator);
-        answer=operate(operator,Number(a),Number(b));
+        console.log("gonna operate: ",operatorName);
+        answer=operate(operatorName,Number(a),Number(b));
         if (answer.length>10){
             answer=answer.substr(0,8);
         }
         
         showAnswer=true;
-        operator=""
-        sign=""
+        operatorName=""
+        operatorSign=""
         bDone=true;
         aDone=false;
         a="";
@@ -269,8 +236,9 @@ function equalClicked(event){
 }
 
 
+//HELPER FUNCTIONS
 function showScreen(){
-    screenCurrent.textContent=a+sign+b;
+    screenCurrent.textContent=a+operatorSign+b;
     if ((a.length+b.length)>10){
         screenCurrent.style.fontSize = '35px'; 
     }
@@ -282,7 +250,6 @@ function showScreen(){
     }
 }
 
-
 function findCurrent(){
     if(aDone==false){
         return a;
@@ -292,9 +259,25 @@ function findCurrent(){
     }
 }
 
+function updateCurrent(variable){
+    if (findCurrent()==a){
+        a=variable;
+    }
+    else{
+        b=variable;
+    }
+}
+
 
 //NOTES:
 
 //  Instead of doing seperate 'a' and then 'b', send current number as argument
 //have function findCurrent() that finds if we are on 'a' or on 'b'
 //  Make answer incapable  of being longer than 10 or something
+//  Make function for updating variables:
+//if (findCurrent()==a){
+//   a=variable;
+//}
+//else{
+//    b=variable;
+//}
