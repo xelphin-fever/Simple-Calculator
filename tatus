@@ -1,0 +1,23 @@
+[33mcommit 6e02852f817ef1fb6db0394965699afb875ed423[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: xelphin-fever <xelphin5@gmail.com>
+Date:   Sun Apr 11 11:58:01 2021 -0600
+
+    Updated Design
+
+[33mcommit eff07957fd3b1898031f511ece81701e5e13d07a[m
+Author: xelphin-fever <xelphin5@gmail.com>
+Date:   Sun Apr 11 11:14:00 2021 -0600
+
+    Added Helper Functions
+
+[33mcommit 2e4487026546e048a5cea7b1209c20ffb86201f1[m
+Author: xelphin-fever <xelphin5@gmail.com>
+Date:   Sun Apr 11 09:52:42 2021 -0600
+
+    Created Calculator Logic and Design
+
+[33mcommit 5686b12df38b96c937a31cb4aaa41594a637fb01[m
+Author: xelphin-fever <77025690+xelphin-fever@users.noreply.github.com>
+Date:   Sun Apr 11 09:28:03 2021 -0600
+
+    Initial commit
